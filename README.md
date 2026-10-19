@@ -22,7 +22,7 @@ QuizMaster — вебзастосунок для створення та про�
 
 ## Команда та розподіл обов'язків
 
-### Project Manager / Team Coordinator & Frontend Developer
+### Project Manager / Team Coordinator & Frontend Developer - Маргаріта
 - Організація командної роботи та комунікації.
 - Ведення GitHub Projects і планування завдань.
 - Підготовка документації та щотижневих звітів.
