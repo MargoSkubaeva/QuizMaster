@@ -7,6 +7,14 @@ node_modules/
 .env.*
 !.env.example
 
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+
 # Build files
 dist/
 build/
@@ -21,3 +29,6 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
+
+# ETC
+backend/notes.md
