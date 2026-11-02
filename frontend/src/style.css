@@ -1,19 +1,184 @@
+/* 1. Глобальні змінні (кольори з макета Figma) */
 :root {
-  font-family: Arial, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  --bg-dark: #121212;
+  --bg-card: #212121;
+  --accent-blue: #2B5CFF;
+  --text-main: #FFFFFF;
+  --text-muted: #B3B3B3;
+  --font-main: 'Inter', sans-serif;
 }
 
+/* 2. Базове скидання стилів */
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  line-height: 1.5;
 }
 
-.container {
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-main);
+}
+
+/* 3. Шапка (Header) */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  border-bottom: 1px solid #333;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.auth-nav button {
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-register {
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--text-main);
+}
+
+.btn-login {
+  background: var(--accent-blue);
+  color: var(--text-main);
+}
+
+/* 4. Головний контейнер */
+.main-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+section {
+  margin-bottom: 60px;
+}
+
+/* 5. Hero секція (Головний заголовок) */
+.hero-title {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.hero-features {
+  display: flex;
+  gap: 15px;
+}
+
+.feature-badge {
+  background: var(--bg-card);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* 6. Секції карток (For Adults / For Children) */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 4px;
+}
+
+.section-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.see-all {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+/* Сітка для карток */
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Базовий стиль картки */
+.quiz-card, .create-quiz-card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+}
+
+/* Картка створення тесту (синя) */
+.create-quiz-card {
+  background-color: var(--accent-blue);
+  border: none;
+}
+
+.btn-create-quiz {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.plus-icon {
+  font-size: 2.5rem;
+  font-weight: 300;
+}
+
+/* 7. CTA Банер */
+.cta-banner {
+  background: linear-gradient(135deg, var(--accent-blue), #8A2BE2);
+  border-radius: 24px;
   padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-primary {
+  background: var(--bg-dark);
+  color: var(--text-main);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
 }
