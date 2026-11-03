@@ -3,15 +3,119 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="icon" type="image/png" href="/favicon.png" />
-
-    <title>QuizMaster</title>
+    <title>Quiz Master</title>
   </head>
-
   <body>
-    <div id="app"></div>
+    <!-- Головний контейнер додатку -->
+    <div id="app">
+      <!-- HEADER (Шапка) -->
+      <header class="header">
+        <a href="/" class="logo">QuizMaster</a>
+        <nav class="auth-nav">
+          <button class="btn-register">Register</button>
+          <button class="btn-login">Login</button>
+        </nav>
+      </header>
 
+      <!-- MAIN PAGE (Головна сторінка) -->
+      <main class="main-page">
+        <!-- HERO СЕКЦІЯ (Головний екран) -->
+        <section class="hero">
+          <!-- Місце для фонової 3D графіки -->
+          <div class="hero-graphics"></div>
+          <h1 class="hero-title">Are you ready to<br />take the Quiz?</h1>
+
+          <!-- Три маленькі овальні блоки під заголовком -->
+          <div class="hero-features">
+            <span class="feature-badge">Feature 1</span>
+            <span class="feature-badge">Feature 2</span>
+            <span class="feature-badge">Feature 3</span>
+          </div>
+        </section>
+
+        <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДОРОСЛИХ -->
+        <section class="quiz-section adults-quizzes">
+          <div class="section-header">
+            <div>
+              <h2>For Adults</h2>
+              <p>Опис тестів для дорослих...</p>
+            </div>
+            <a href="/discover" class="see-all">See all</a>
+          </div>
+
+          <ul class="quiz-grid">
+            <!-- Картка створення тесту (синя) -->
+            <li class="create-quiz-card">
+              <button class="btn-create-quiz">
+                <span class="plus-icon">+</span>
+                Create quiz
+              </button>
+            </li>
+            <!-- Звичайні картки тестів (темні) -->
+            <li class="quiz-card">Quiz Card 1</li>
+            <li class="quiz-card">Quiz Card 2</li>
+            <li class="quiz-card">Quiz Card 3</li>
+          </ul>
+        </section>
+
+        <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДІТЕЙ -->
+        <section class="quiz-section children-quizzes">
+          <div class="section-header">
+            <div>
+              <h2>For Children</h2>
+              <p>Опис тестів для дітей...</p>
+            </div>
+            <a href="/discover" class="see-all">See all</a>
+          </div>
+
+          <ul class="quiz-grid">
+            <li class="create-quiz-card">
+              <button class="btn-create-quiz">
+                <span class="plus-icon">+</span>
+                Create quiz
+              </button>
+            </li>
+            <li class="quiz-card">Quiz Card 1</li>
+            <li class="quiz-card">Quiz Card 2</li>
+            <li class="quiz-card">Quiz Card 3</li>
+          </ul>
+        </section>
+
+        <!-- CTA БАНЕР (Joins, pass quizzes...) -->
+        <section class="cta-banner">
+          <div class="cta-content">
+            <h2>Joins, pass quizzes or create them</h2>
+            <!-- Тут будуть кнопки -->
+            <div class="cta-buttons">
+              <button class="btn-primary">Create quiz</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- СЕКЦІЯ ВІДГУКІВ -->
+        <section class="reviews-section">
+          <h2>Reviews</h2>
+          <div class="reviews-grid">
+            <article class="review-card">
+              <div class="reviewer-info">Avatar + Name</div>
+              <p class="review-text">Review text goes here...</p>
+            </article>
+            <article class="review-card">
+              <div class="reviewer-info">Avatar + Name</div>
+              <p class="review-text">Review text goes here...</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- СТАТИСТИКА (Нижній синій блок) -->
+        <section class="stats-footer">
+          <div class="stats-number">129865</div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Підключення скриптів Vite -->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
