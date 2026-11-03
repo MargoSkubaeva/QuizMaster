@@ -1,98 +1,150 @@
 import './style.css';
 
-document.querySelector('#app').innerHTML = `
-  <!-- HEADER (Шапка) -->
-  <header class="header">
-    <a href="/" class="logo">QuizMaster</a>
-    <nav class="auth-nav">
-      <button class="btn-register">Register</button>
-      <button class="btn-login">Login</button>
-    </nav>
-  </header>
+import { renderHome } from './pages/home.js';
+import { renderAdults } from './pages/adults.js';
+import { renderChildren } from './pages/children.js';
+import { renderQuiz } from './pages/quiz.js';
+import { renderLogin } from './modals/login.js';
+import { renderRegister } from './modals/register.js';
 
-  <!-- MAIN PAGE (Головна сторінка) -->
-  <main class="main-page">
-    
-    <!-- HERO СЕКЦІЯ (Головний екран) -->
-    <section class="hero">
-      <div class="hero-graphics"></div>
-      <h1 class="hero-title">Are you ready to<br>take the Quiz?</h1>
-      <div class="hero-features">
-        <span class="feature-badge">Own platform</span>
-        <span class="feature-badge">Create exclusive quests</span>
-        <span class="feature-badge">Large assortment of quizzes</span>
-      </div>
-    </section>
+const routes = {
+  '/': renderHome,
+  '/adults': renderAdults,
+  '/children': renderChildren,
+  '/quiz': renderQuiz,
+};
 
-    <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДОРОСЛИХ -->
-    <section class="quiz-section adults-quizzes">
-      <div class="section-header">
-        <div>
-          <h2>For Adults</h2>
-          <p>Dive deep into a world of intriguing quizzes tailored for adults. From cinema to logic, challenge your knowledge and discover where your expertise lies. Explore a diverse range of topics and test the depths of your knowledge.</p>
-        </div>
-        <a href="/discover" class="see-all">See all</a>
-      </div>
-      
-      <ul class="quiz-grid">
-        <li class="create-quiz-card">
-          <button class="btn-create-quiz"><span class="plus-icon">+</span>Create quiz</button>
-        </li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-      </ul>
-    </section>
+function renderPage() {
+  const path = window.location.pathname;
+  const page = routes[path] || renderHome;
 
-    <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДІТЕЙ -->
-    <section class="quiz-section children-quizzes">
-      <div class="section-header">
-        <div>
-          <h2>For Children</h2>
-          <p>Engaging and fun quizzes designed specifically for kids. Dive into a world of colorful questions on movies, music, and much more. Perfect for young curious minds! A safe space for children to learn, play, and grow their knowledge.</p>
-        </div>
-        <a href="/discover" class="see-all">See all</a>
-      </div>
-      
-      <ul class="quiz-grid">
-        <li class="create-quiz-card">
-          <button class="btn-create-quiz"><span class="plus-icon">+</span>Create quiz</button>
-        </li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-      </ul>
-    </section>
+  document.querySelector('#app').innerHTML = page();
 
-    <!-- CTA БАНЕР -->
-    <section class="cta-banner">
-      <div class="cta-content">
-        <h2>Joins, pass quizzes or create them</h2>
-        <div class="cta-buttons">
-          <button class="btn-primary">Create quiz</button>
-        </div>
-      </div>
-    </section>
+  const navLinks = document.querySelectorAll('.main-nav a');
 
-    <!-- СЕКЦІЯ ВІДГУКІВ -->
-    <section class="reviews-section">
-      <h2>Reviews</h2>
-      <div class="reviews-grid">
-        <article class="review-card">
-          <div class="reviewer-info">Dmitry</div>
-          <p class="review-text">Excellent platform, I myself passed more than one quiz, I recommended it to friends. You can conveniently create your own quizzes, for this special thanks.</p>
-        </article>
-        <article class="review-card">
-          <div class="reviewer-info">Victoria</div>
-          <p class="review-text">Excellent platform, I myself passed more than one quiz, I recommended it to friends. You can conveniently create your own quizzes, for this special thanks.</p>
-        </article>
-      </div>
-    </section>
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute('href') === path;
 
-    <!-- СТАТИСТИКА -->
-    <section class="stats-footer">
-      <div class="stats-number">129865</div>
-    </section>
+    link.classList.toggle('active', isActive);
 
-  </main>
-`;
+    if (isActive) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
+
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('a[href]');
+
+  if (!link) return;
+
+  const url = new URL(link.href);
+
+  if (url.origin !== window.location.origin) return;
+  if (!routes[url.pathname]) return;
+
+  event.preventDefault();
+
+  window.history.pushState({}, '', url.pathname);
+  renderPage();
+  window.scrollTo(0, 0);
+});
+
+window.addEventListener('popstate', renderPage);
+
+renderPage();
+
+function closeAuthModal() {
+  document.querySelector('#login-modal')?.remove();
+  document.querySelector('#register-modal')?.remove();
+}
+
+function openAuthModal(type) {
+  closeAuthModal();
+
+  const modal = type === 'register' ? renderRegister() : renderLogin();
+
+  document.body.insertAdjacentHTML('beforeend', modal);
+}
+
+document.addEventListener('click', (event) => {
+  // Show or hide password
+  const passwordToggle = event.target.closest('.password-toggle');
+
+  if (passwordToggle) {
+    const passwordInput = passwordToggle
+      .closest('.password-field')
+      .querySelector('input');
+
+    const isPasswordVisible = passwordInput.type === 'text';
+
+    passwordInput.type = isPasswordVisible ? 'password' : 'text';
+
+    const icon = passwordToggle.querySelector('img');
+
+    icon.src = isPasswordVisible
+      ? passwordToggle.dataset.eyeOff
+      : passwordToggle.dataset.eye;
+
+    passwordToggle.setAttribute(
+      'aria-label',
+      isPasswordVisible ? 'Show password' : 'Hide password'
+    );
+
+    passwordToggle.setAttribute('aria-pressed', String(!isPasswordVisible));
+
+    return;
+  }
+
+  // Open Login from the header
+  if (event.target.closest('.header .btn-login')) {
+    openAuthModal('login');
+    return;
+  }
+
+  // Open Register from the header
+  if (event.target.closest('.header .btn-register')) {
+    openAuthModal('register');
+    return;
+  }
+
+  // Switch between Login and Register
+  const switchButton = event.target.closest('.auth-switch');
+
+  if (switchButton) {
+    const currentModal = switchButton.closest('.modal-overlay');
+
+    if (currentModal?.id === 'login-modal') {
+      openAuthModal('register');
+    } else if (currentModal?.id === 'register-modal') {
+      openAuthModal('login');
+    }
+
+    return;
+  }
+
+  // Close the modal
+  if (
+    event.target.closest('.modal-close') ||
+    event.target.classList.contains('modal-overlay')
+  ) {
+    closeAuthModal();
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeAuthModal();
+  }
+});
+
+document.addEventListener('submit', (event) => {
+  if (
+    event.target.matches('.login-form') ||
+    event.target.matches('.register-form')
+  ) {
+    event.preventDefault();
+  }
+});
