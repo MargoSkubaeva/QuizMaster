@@ -4,28 +4,45 @@ document.querySelector('#app').innerHTML = `
   <!-- HEADER (Шапка) -->
   <header class="header">
     <a href="/" class="logo">QuizMaster</a>
+    
+    <nav class="main-nav">
+      <a href="#adults">For Adults</a>
+      <a href="#children">For Children</a>
+    </nav>
+
     <nav class="auth-nav">
       <button class="btn-register">Register</button>
       <button class="btn-login">Login</button>
     </nav>
   </header>
 
-  <!-- MAIN PAGE (Головна сторінка) -->
+  <!-- MAIN PAGE -->
   <main class="main-page">
     
-    <!-- HERO СЕКЦІЯ (Головний екран) -->
+   <!-- HERO СЕКЦІЯ -->
     <section class="hero">
-      <div class="hero-graphics"></div>
+      <div class="hero-info">
+        <p class="hero-greeting">Hello visitor!</p>
+        <p class="hero-description">On the site you will find quizzes and quizzes with various types of questions: cinema, music, logic and others. Quizzes differ in the degree of difficulty of questions, the number and type of questions.</p>
+        <div class="hero-actions">
+          <button class="btn-choose">Choose a test</button>
+          <button class="btn-create">Create a quest</button>
+        </div>
+      </div>
+
       <h1 class="hero-title">Are you ready to<br>take the Quiz?</h1>
+      
       <div class="hero-features">
         <span class="feature-badge">Own platform</span>
         <span class="feature-badge">Create exclusive quests</span>
         <span class="feature-badge">Large assortment of quizzes</span>
       </div>
+      
+      <div class="hero-graphics"></div>
     </section>
 
-    <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДОРОСЛИХ -->
-    <section class="quiz-section adults-quizzes">
+    <!-- СЕКЦІЯ ДЛЯ ДОРОСЛИХ -->
+    <section class="quiz-section" id="adults">
       <div class="section-header">
         <div>
           <h2>For Adults</h2>
@@ -34,18 +51,65 @@ document.querySelector('#app').innerHTML = `
         <a href="/discover" class="see-all">See all</a>
       </div>
       
-      <ul class="quiz-grid">
-        <li class="create-quiz-card">
-          <button class="btn-create-quiz"><span class="plus-icon">+</span>Create quiz</button>
-        </li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-      </ul>
+      <div class="quiz-grid">
+        <!-- Перша картка (активна/синя) -->
+        <div class="quiz-card active">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
+
+        <!-- Стандартні картки -->
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
+
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
+
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
+      </div>
     </section>
 
-    <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДІТЕЙ -->
-    <section class="quiz-section children-quizzes">
+    <!-- СЕКЦІЯ ДЛЯ ДІТЕЙ -->
+    <section class="quiz-section" id="children">
       <div class="section-header">
         <div>
           <h2>For Children</h2>
@@ -54,24 +118,72 @@ document.querySelector('#app').innerHTML = `
         <a href="/discover" class="see-all">See all</a>
       </div>
       
-      <ul class="quiz-grid">
-        <li class="create-quiz-card">
-          <button class="btn-create-quiz"><span class="plus-icon">+</span>Create quiz</button>
-        </li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-        <li class="quiz-card">General Science</li>
-      </ul>
-    </section>
+      <div class="quiz-grid">
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
 
-    <!-- CTA БАНЕР -->
-    <section class="cta-banner">
-      <div class="cta-content">
-        <h2>Joins, pass quizzes or create them</h2>
-        <div class="cta-buttons">
-          <button class="btn-primary">Create quiz</button>
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
+
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
+        </div>
+
+        <div class="quiz-card">
+          <div class="card-top">
+            <span class="card-users">👥 485</span>
+            <span class="card-heart">♡</span>
+          </div>
+          <div class="card-content">
+            <span class="card-theme">Themes</span>
+            <h3>General Science</h3>
+            <div class="card-stars">★★★★☆</div>
+          </div>
+          <button class="btn-start">Start</button>
         </div>
       </div>
+    </section>
+
+<!-- CTA БАНЕР -->
+    <section class="cta-banner">
+      <div class="cta-content">
+        <h2>Joins, pass quizzes or<br>create them</h2>
+        <p>Be a part of our quiz community! Take on challenges, showcase your knowledge, or craft your very own quiz to share with the world. Whether you're a quiz enthusiast or a curious learner, there's something here for everyone.</p>
+        <div class="cta-buttons">
+          <button class="btn-cta-white">Choose a test</button>
+          <button class="btn-cta-outline">Create a quest</button>
+        </div>
+      </div>
+      <div class="cta-graphics"></div>
     </section>
 
     <!-- СЕКЦІЯ ВІДГУКІВ -->
@@ -79,20 +191,42 @@ document.querySelector('#app').innerHTML = `
       <h2>Reviews</h2>
       <div class="reviews-grid">
         <article class="review-card">
-          <div class="reviewer-info">Dmitry</div>
+          <div class="reviewer-header">
+            <div class="avatar-placeholder">D</div>
+            <span class="reviewer-name">Dmitry</span>
+          </div>
           <p class="review-text">Excellent platform, I myself passed more than one quiz, I recommended it to friends. You can conveniently create your own quizzes, for this special thanks.</p>
         </article>
+        
         <article class="review-card">
-          <div class="reviewer-info">Victoria</div>
+          <div class="reviewer-header">
+            <div class="avatar-placeholder v-avatar">V</div>
+            <span class="reviewer-name">Victoria</span>
+          </div>
           <p class="review-text">Excellent platform, I myself passed more than one quiz, I recommended it to friends. You can conveniently create your own quizzes, for this special thanks.</p>
         </article>
       </div>
+      <div class="pagination-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
     </section>
-
-    <!-- СТАТИСТИКА -->
-    <section class="stats-footer">
-      <div class="stats-number">129865</div>
-    </section>
-
   </main>
+
+  <!-- СИНІЙ ФУТЕР ЗІ СТАТИСТИКОЮ -->
+  <footer class="stats-footer">
+    <div class="stats-graphics"></div>
+    <div class="stats-content">
+      <div class="stats-number">129865</div>
+      <p class="stats-label">People passed the quiz</p>
+    </div>
+    <div class="footer-bottom">
+      <span class="copyright">© QuizMaster 2023 All rights reserved</span>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
 `;
