@@ -36,3 +36,19 @@ CHILDREN_CATEGORIES: list[str] = [
     "Music",
     "General knowledge",
 ]
+
+
+class QuizCollectionType(str, Enum):
+    ADULTS = "adults"
+    CHILDREN = "children"
+    BOTH = "both"
+
+
+class QuizSort(str, Enum):
+    POPULAR = "popular"
+    LATEST = "latest"
+
+
+QUIZ_LIST_MIN_LIMIT = 4
+QUIZ_LIST_MAX_LIMIT = 8
+QUIZ_LIST_DEFAULT_LIMIT = 4
