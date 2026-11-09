@@ -7,66 +7,95 @@
     <title>Quiz Master</title>
     <link href="https://fonts.cdnfonts.com/css/gilroy-bold" rel="stylesheet" />
   </head>
+
   <body>
-    <!-- Головний контейнер додатку -->
     <div id="app">
-      <!-- HEADER (Шапка) -->
+      <!-- HEADER -->
       <header class="header">
         <a href="/" class="logo">QuizMaster</a>
+
+        <nav class="main-nav">
+          <a href="#adults-quizzes">For Adults</a>
+          <a href="#children-quizzes">For Children</a>
+        </nav>
+
         <nav class="auth-nav">
           <button class="btn-register">Register</button>
           <button class="btn-login">Login</button>
         </nav>
       </header>
 
-      <!-- MAIN PAGE (Головна сторінка) -->
+      <!-- MAIN PAGE -->
       <main class="main-page">
-        <!-- HERO СЕКЦІЯ (Головний екран) -->
+        <!-- HERO SECTION -->
         <section class="hero">
-          <!-- Місце для фонової 3D графіки -->
+          <!-- 3D BACKGROUND -->
           <div class="hero-graphics"></div>
-          <h1 class="hero-title">Are you ready to<br />take the Quiz?</h1>
 
-          <!-- Три маленькі овальні блоки під заголовком -->
+          <!-- WELCOME TEXT -->
+          <div class="hero-info">
+            <p class="hero-greeting">Hello visitor!</p>
+
+            <p class="hero-description">
+              On the site you will find quizzes and quizzes with various types
+              of questions: cinema, music, logic and others. Quizzes differ in
+              the degree of difficulty of questions, the number and type of
+              questions.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn-choose">Choose a test</button>
+              <button class="btn-create">Create a quest</button>
+            </div>
+          </div>
+
+          <!-- MAIN TITLE -->
+          <h1 class="hero-title">
+            Are you ready to<br />
+            take the Quiz?
+          </h1>
+
+          <!-- FEATURES -->
           <div class="hero-features">
-            <span class="feature-badge">Feature 1</span>
-            <span class="feature-badge">Feature 2</span>
-            <span class="feature-badge">Feature 3</span>
+            <span class="feature-badge">Own platform</span>
+            <span class="feature-badge">Create exclusive quests</span>
+            <span class="feature-badge">Large assortment of quizzes</span>
           </div>
         </section>
 
-        <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДОРОСЛИХ -->
-        <section class="quiz-section adults-quizzes">
+        <!-- ADULT QUIZZES -->
+        <section id="adults-quizzes" class="quiz-section adults-quizzes">
           <div class="section-header">
             <div>
               <h2>For Adults</h2>
               <p>Опис тестів для дорослих...</p>
             </div>
+
             <a href="/discover" class="see-all">See all</a>
           </div>
 
           <ul class="quiz-grid">
-            <!-- Картка створення тесту (синя) -->
             <li class="create-quiz-card">
               <button class="btn-create-quiz">
                 <span class="plus-icon">+</span>
                 Create quiz
               </button>
             </li>
-            <!-- Звичайні картки тестів (темні) -->
+
             <li class="quiz-card">Quiz Card 1</li>
             <li class="quiz-card">Quiz Card 2</li>
             <li class="quiz-card">Quiz Card 3</li>
           </ul>
         </section>
 
-        <!-- СЕКЦІЯ ТЕСТІВ ДЛЯ ДІТЕЙ -->
-        <section class="quiz-section children-quizzes">
+        <!-- CHILDREN QUIZZES -->
+        <section id="children-quizzes" class="quiz-section children-quizzes">
           <div class="section-header">
             <div>
               <h2>For Children</h2>
               <p>Опис тестів для дітей...</p>
             </div>
+
             <a href="/discover" class="see-all">See all</a>
           </div>
 
@@ -77,31 +106,36 @@
                 Create quiz
               </button>
             </li>
+
             <li class="quiz-card">Quiz Card 1</li>
             <li class="quiz-card">Quiz Card 2</li>
             <li class="quiz-card">Quiz Card 3</li>
           </ul>
         </section>
 
-        <!-- CTA БАНЕР (Joins, pass quizzes...) -->
+        <!-- CTA BANNER -->
         <section class="cta-banner">
           <div class="cta-content">
             <h2>Joins, pass quizzes or create them</h2>
-            <!-- Тут будуть кнопки -->
+
             <div class="cta-buttons">
               <button class="btn-primary">Create quiz</button>
             </div>
           </div>
+
+          <div class="cta-graphics"></div>
         </section>
 
-        <!-- СЕКЦІЯ ВІДГУКІВ -->
+        <!-- REVIEWS -->
         <section class="reviews-section">
           <h2>Reviews</h2>
+
           <div class="reviews-grid">
             <article class="review-card">
               <div class="reviewer-info">Avatar + Name</div>
               <p class="review-text">Review text goes here...</p>
             </article>
+
             <article class="review-card">
               <div class="reviewer-info">Avatar + Name</div>
               <p class="review-text">Review text goes here...</p>
@@ -109,14 +143,37 @@
           </div>
         </section>
 
-        <!-- СТАТИСТИКА (Нижній синій блок) -->
-        <section class="stats-footer">
-          <div class="stats-number">129865</div>
-        </section>
-      </main>
-    </div>
+      
+<!-- STATISTICS FOOTER -->
+<section class="stats-footer">
 
-    <!-- Підключення скриптів Vite -->
+  <!-- Decorative 3D figure -->
+  <div class="stats-graphics"></div>
+
+  <!-- Statistics -->
+  <div class="stats-content">
+    <div class="stats-number">129865</div>
+    <p class="stats-label">People passed the quiz</p>
+  </div>
+
+  <!-- Footer bottom links -->
+  <div class="footer-bottom">
+
+    <span class="copyright">
+      © QuizMaster 2023 All rights reserved
+    </span>
+
+    <nav class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </nav>
+
+  </div>
+
+</section>
+
+
+    <!-- VITE -->
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

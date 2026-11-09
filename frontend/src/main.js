@@ -55,7 +55,7 @@ document.querySelector('#app').innerHTML = `
         <!-- Перша картка (активна/синя) -->
         <div class="quiz-card active">
           <div class="card-top">
-            <span class="card-users">👥 485</span>
+            <span class="card-users"> 485</span>
             <span class="card-heart">♡</span>
           </div>
           <div class="card-content">
