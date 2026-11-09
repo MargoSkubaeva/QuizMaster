@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
+from app.api.routes import quizzes
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -44,6 +45,9 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception):
     return JSONResponse(status_code=500, content={"message": "Internal server error"})
+
+
+app.include_router(quizzes.router)
 
 
 @app.get("/", tags=["Health"])
