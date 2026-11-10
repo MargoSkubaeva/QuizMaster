@@ -1,232 +1,332 @@
 import './style.css';
 
-document.querySelector('#app').innerHTML = `
-  <!-- HEADER (Шапка) -->
-  <header class="header">
-    <a href="/" class="logo">QuizMaster</a>
-    
-    <nav class="main-nav">
-      <a href="#adults">For Adults</a>
-      <a href="#children">For Children</a>
-    </nav>
+import { renderHome } from './pages/home.js';
+import { renderAdults } from './pages/adults.js';
+import { renderChildren } from './pages/children.js';
+import { renderQuiz } from './pages/quiz.js';
 
-    <nav class="auth-nav">
-      <button class="btn-register">Register</button>
-      <button class="btn-login">Login</button>
-    </nav>
-  </header>
+import { renderLogin } from './modals/login.js';
+import { renderRegister } from './modals/register.js';
+import { renderRestorePassword } from './modals/restore-password.js';
+import { renderRestorePasswordDone } from './modals/restore-password-done.js';
+import { renderNewPassword } from './modals/new-password.js';
 
-  <!-- MAIN PAGE -->
-  <main class="main-page">
-    
-   <!-- HERO СЕКЦІЯ -->
-    <section class="hero">
-      <div class="hero-info">
-        <p class="hero-greeting">Hello visitor!</p>
-        <p class="hero-description">On the site you will find quizzes and quizzes with various types of questions: cinema, music, logic and others. Quizzes differ in the degree of difficulty of questions, the number and type of questions.</p>
-        <div class="hero-actions">
-          <button class="btn-choose">Choose a test</button>
-          <button class="btn-create">Create a quest</button>
-        </div>
-      </div>
+// Pages and routes
+const routes = {
+  '/': renderHome,
+  '/adults': renderAdults,
+  '/children': renderChildren,
+  '/quiz': renderQuiz,
+};
 
-      <h1 class="hero-title">Are you ready to<br>take the Quiz?</h1>
-      
-      <div class="hero-features">
-        <span class="feature-badge">Own platform</span>
-        <span class="feature-badge">Create exclusive quests</span>
-        <span class="feature-badge">Large assortment of quizzes</span>
-      </div>
-      
-      <div class="hero-graphics"></div>
-    </section>
+// Render the current page
+function renderPage() {
+  const path = window.location.pathname;
+  const page = routes[path] || renderHome;
 
-    <!-- СЕКЦІЯ ДЛЯ ДОРОСЛИХ -->
-    <section class="quiz-section" id="adults">
-      <div class="section-header">
-        <div>
-          <h2>For Adults</h2>
-          <p>Dive deep into a world of intriguing quizzes tailored for adults. From cinema to logic, challenge your knowledge and discover where your expertise lies. Explore a diverse range of topics and test the depths of your knowledge.</p>
-        </div>
-        <a href="/discover" class="see-all">See all</a>
-      </div>
-      
-      <div class="quiz-grid">
-        <!-- Перша картка (активна/синя) -->
-        <div class="quiz-card active">
-          <div class="card-top">
-            <span class="card-users"> 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
+  document.querySelector('#app').innerHTML = page();
 
-        <!-- Стандартні картки -->
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
+  const navLinks = document.querySelectorAll('.main-nav a');
 
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute('href') === path;
 
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
-      </div>
-    </section>
+    link.classList.toggle('active', isActive);
 
-    <!-- СЕКЦІЯ ДЛЯ ДІТЕЙ -->
-    <section class="quiz-section" id="children">
-      <div class="section-header">
-        <div>
-          <h2>For Children</h2>
-          <p>Engaging and fun quizzes designed specifically for kids. Dive into a world of colorful questions on movies, music, and much more. Perfect for young curious minds! A safe space for children to learn, play, and grow their knowledge.</p>
-        </div>
-        <a href="/discover" class="see-all">See all</a>
-      </div>
-      
-      <div class="quiz-grid">
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
+    if (isActive) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
 
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
+// Navigation without page reload
+document.addEventListener('click', (event) => {
+  const link = event.target.closest('a[href]');
 
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
+  if (!link) return;
 
-        <div class="quiz-card">
-          <div class="card-top">
-            <span class="card-users">👥 485</span>
-            <span class="card-heart">♡</span>
-          </div>
-          <div class="card-content">
-            <span class="card-theme">Themes</span>
-            <h3>General Science</h3>
-            <div class="card-stars">★★★★☆</div>
-          </div>
-          <button class="btn-start">Start</button>
-        </div>
-      </div>
-    </section>
+  const url = new URL(link.href);
 
-<!-- CTA БАНЕР -->
-    <section class="cta-banner">
-      <div class="cta-content">
-        <h2>Joins, pass quizzes or<br>create them</h2>
-        <p>Be a part of our quiz community! Take on challenges, showcase your knowledge, or craft your very own quiz to share with the world. Whether you're a quiz enthusiast or a curious learner, there's something here for everyone.</p>
-        <div class="cta-buttons">
-          <button class="btn-cta-white">Choose a test</button>
-          <button class="btn-cta-outline">Create a quest</button>
-        </div>
-      </div>
-      <div class="cta-graphics"></div>
-    </section>
+  if (url.origin !== window.location.origin) return;
+  if (!routes[url.pathname]) return;
 
-    <!-- СЕКЦІЯ ВІДГУКІВ -->
-    <section class="reviews-section">
-      <h2>Reviews</h2>
-      <div class="reviews-grid">
-        <article class="review-card">
-          <div class="reviewer-header">
-            <div class="avatar-placeholder">D</div>
-            <span class="reviewer-name">Dmitry</span>
-          </div>
-          <p class="review-text">Excellent platform, I myself passed more than one quiz, I recommended it to friends. You can conveniently create your own quizzes, for this special thanks.</p>
-        </article>
-        
-        <article class="review-card">
-          <div class="reviewer-header">
-            <div class="avatar-placeholder v-avatar">V</div>
-            <span class="reviewer-name">Victoria</span>
-          </div>
-          <p class="review-text">Excellent platform, I myself passed more than one quiz, I recommended it to friends. You can conveniently create your own quizzes, for this special thanks.</p>
-        </article>
-      </div>
-      <div class="pagination-dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
-      </div>
-    </section>
-  </main>
+  event.preventDefault();
 
-  <!-- СИНІЙ ФУТЕР ЗІ СТАТИСТИКОЮ -->
-  <footer class="stats-footer">
-    <div class="stats-graphics"></div>
-    <div class="stats-content">
-      <div class="stats-number">129865</div>
-      <p class="stats-label">People passed the quiz</p>
-    </div>
-    <div class="footer-bottom">
-      <span class="copyright">© QuizMaster 2023 All rights reserved</span>
-      <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-      </div>
-    </div>
-  </footer>
-`;
+  window.history.pushState({}, '', url.pathname);
+  renderPage();
+  window.scrollTo(0, 0);
+});
+
+// Browser back and forward
+window.addEventListener('popstate', () => {
+  renderPage();
+  closeAuthModal();
+
+  if (window.location.pathname === '/reset-password') {
+    openAuthModal('new-password');
+  }
+});
+
+renderPage();
+
+// Close authentication modals
+function closeAuthModal() {
+  document.querySelector('#login-modal')?.remove();
+  document.querySelector('#register-modal')?.remove();
+  document.querySelector('#restore-password-modal')?.remove();
+  document.querySelector('#restore-password-done-modal')?.remove();
+  document.querySelector('#new-password-modal')?.remove();
+}
+
+// Open the requested authentication modal
+function openAuthModal(type) {
+  closeAuthModal();
+
+  let modal;
+
+  if (type === 'register') {
+    modal = renderRegister();
+  } else if (type === 'restore') {
+    modal = renderRestorePassword();
+  } else if (type === 'restore-done') {
+    modal = renderRestorePasswordDone();
+  } else if (type === 'new-password') {
+    modal = renderNewPassword();
+  } else {
+    modal = renderLogin();
+  }
+
+  document.body.insertAdjacentHTML('beforeend', modal);
+}
+
+// Temporary route for testing New password
+if (window.location.pathname === '/reset-password') {
+  openAuthModal('new-password');
+}
+
+// Update password validation state
+function updatePasswordFeedback(form, state, message) {
+  const repeatInput = form.querySelector('#repeat-password');
+  const feedback = form.querySelector('#password-feedback');
+
+  if (!repeatInput || !feedback) return;
+
+  const feedbackText = feedback.querySelector('.password-feedback-text');
+  const feedbackIcon = feedback.querySelector('.password-feedback-icon');
+
+  const passwordField = repeatInput.closest('.password-field');
+  const toggleButton = passwordField?.querySelector('.password-toggle');
+  const toggleIcon = toggleButton?.querySelector('img');
+
+  repeatInput.classList.remove('is-error', 'is-success');
+  feedback.classList.remove('is-error', 'is-success');
+
+  if (feedbackText) {
+    feedbackText.textContent = message;
+  }
+
+  // The status icon appears inside the input instead of the eye.
+  if (feedbackIcon) {
+    feedbackIcon.style.display = 'none';
+  }
+
+  if (state === 'is-error') {
+    repeatInput.classList.add('is-error');
+    feedback.classList.add('is-error');
+
+    if (toggleIcon && toggleButton) {
+      toggleIcon.src = feedback.dataset.errorIcon;
+      toggleButton.disabled = true;
+      toggleButton.setAttribute('aria-label', 'Passwords do not match');
+    }
+  } else if (state === 'is-success') {
+    repeatInput.classList.add('is-success');
+    feedback.classList.add('is-success');
+
+    if (toggleIcon && toggleButton) {
+      toggleIcon.src = feedback.dataset.successIcon;
+      toggleButton.disabled = true;
+      toggleButton.setAttribute('aria-label', 'Passwords match');
+    }
+  } else {
+    // Restore the eye icon when the user edits a password.
+    if (toggleIcon && toggleButton) {
+      const isVisible = repeatInput.type === 'text';
+
+      toggleIcon.src = isVisible
+        ? toggleButton.dataset.eye
+        : toggleButton.dataset.eyeOff;
+
+      toggleButton.disabled = false;
+
+      toggleButton.setAttribute(
+        'aria-label',
+        isVisible ? 'Hide password' : 'Show password'
+      );
+    }
+  }
+
+  repeatInput.setAttribute('aria-invalid', String(state === 'is-error'));
+}
+
+// Handle modal buttons
+document.addEventListener('click', (event) => {
+  // Show or hide password
+  const passwordToggle = event.target.closest('.password-toggle');
+
+  if (passwordToggle) {
+    if (passwordToggle.disabled) return;
+
+    const passwordInput = passwordToggle
+      .closest('.password-field')
+      ?.querySelector('input');
+
+    if (!passwordInput) return;
+
+    const isPasswordVisible = passwordInput.type === 'text';
+
+    passwordInput.type = isPasswordVisible ? 'password' : 'text';
+
+    const icon = passwordToggle.querySelector('img');
+
+    if (icon) {
+      icon.src = isPasswordVisible
+        ? passwordToggle.dataset.eyeOff
+        : passwordToggle.dataset.eye;
+    }
+
+    passwordToggle.setAttribute(
+      'aria-label',
+      isPasswordVisible ? 'Show password' : 'Hide password'
+    );
+
+    passwordToggle.setAttribute('aria-pressed', String(!isPasswordVisible));
+
+    return;
+  }
+
+  // Open Login
+  if (event.target.closest('.header .btn-login')) {
+    openAuthModal('login');
+    return;
+  }
+
+  // Open Register
+  if (event.target.closest('.header .btn-register')) {
+    openAuthModal('register');
+    return;
+  }
+
+  // Open Restore password
+  if (event.target.closest('.auth-restore')) {
+    openAuthModal('restore');
+    return;
+  }
+
+  // Return from Restore password to Login
+  if (event.target.closest('.restore-back')) {
+    openAuthModal('login');
+    return;
+  }
+
+  // Switch between Login and Register
+  const switchButton = event.target.closest('.auth-switch');
+
+  if (switchButton) {
+    const currentModal = switchButton.closest('.modal-overlay');
+
+    if (currentModal?.id === 'login-modal') {
+      openAuthModal('register');
+    } else if (currentModal?.id === 'register-modal') {
+      openAuthModal('login');
+    }
+
+    return;
+  }
+
+  // Return to the main page
+  if (event.target.closest('.restore-main-page')) {
+    closeAuthModal();
+
+    window.history.pushState({}, '', '/');
+    renderPage();
+    window.scrollTo(0, 0);
+
+    return;
+  }
+
+  // Close modal
+  if (
+    event.target.closest('.modal-close') ||
+    event.target.classList.contains('modal-overlay')
+  ) {
+    closeAuthModal();
+  }
+});
+
+// Close modal with Escape
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') {
+    closeAuthModal();
+  }
+});
+
+// Reset validation when either password changes
+document.addEventListener('input', (event) => {
+  const form = event.target.closest('.new-password-form');
+
+  if (!form) return;
+
+  if (
+    event.target.matches('#new-password') ||
+    event.target.matches('#repeat-password')
+  ) {
+    updatePasswordFeedback(form, '', '');
+  }
+});
+
+// Handle authentication forms
+document.addEventListener('submit', (event) => {
+  // Login and Register
+  if (event.target.matches('.login-form, .register-form')) {
+    event.preventDefault();
+    return;
+  }
+
+  // Restore password
+  if (event.target.matches('.restore-password-form')) {
+    event.preventDefault();
+
+    if (!event.target.reportValidity()) return;
+
+    // Frontend demonstration only
+    // No email is actually sent
+    openAuthModal('restore-done');
+
+    return;
+  }
+
+  // New password
+  if (event.target.matches('.new-password-form')) {
+    event.preventDefault();
+
+    const form = event.target;
+
+    if (!form.reportValidity()) return;
+
+    const password = form.querySelector('#new-password').value;
+    const repeatPassword = form.querySelector('#repeat-password').value;
+
+    if (password !== repeatPassword) {
+      updatePasswordFeedback(form, 'is-error', 'Passwords do not match');
+
+      return;
+    }
+
+    updatePasswordFeedback(form, 'is-success', 'Passwords match');
+
+    // Actual password reset requires backend integration
+  }
+});
