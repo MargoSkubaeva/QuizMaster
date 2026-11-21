@@ -148,7 +148,7 @@ function renderQuizCards() {
         <h3>General Science</h3>
         <div class="card-stars">★★★★☆</div>
       </div>
-      <button class="btn-start">Start</button>
+      <button class="btn-start" onclick="window.location.href='/quiz'">Start</button>
     </div>
   `
   ).join('');

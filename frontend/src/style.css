@@ -1,21 +1,28 @@
+
+/* =========================================
+   1. GLOBAL SETTINGS
+========================================= */
+
 @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
 
-/* 1. Глобальні змінні */
 :root {
   --bg-dark: #121212;
   --bg-card: #191919;
-  --bg-card-active: #2B5CFF;
   --accent-blue: #2B5CFF;
   --text-main: #FFFFFF;
   --text-muted: #B3B3B3;
-  --font-main: 'Inter', sans-serif;
+  --font-main: 'Gilroy', sans-serif;
+  --page-gutter: clamp(24px, 7vw, 100px);
 }
 
-/* 2. Базове скидання */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -26,177 +33,325 @@ body {
   overflow-x: hidden;
 }
 
-ul { list-style: none; }
-a { text-decoration: none; color: var(--text-main); }
+ul {
+  list-style: none;
+}
 
-/* 3. Шапка (Header) */
+a {
+  text-decoration: none;
+  color: var(--text-main);
+}
+
+button {
+  font-family: var(--font-main);
+}
+
+/* =========================================
+   2. HEADER
+========================================= */
+
 .header {
-  display: flex;
-  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+  height: 55px;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  padding: 20px 60px;
+
   position: relative;
-  z-index: 999; 
+  z-index: 999;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  white-space: nowrap;
 }
 
 .main-nav {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  gap: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
 }
 
 .main-nav a {
-  color: #8bb4f8;
-  font-size: 1rem;
+  font-size: 12px;
+  color: #FFFFFF;
+  transition: opacity 0.2s ease;
+}
+
+.main-nav a:hover {
+  opacity: 0.65;
 }
 
 .auth-nav {
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-self: end;
+  gap: 12px;
 }
 
 .btn-register {
   background: transparent;
-  color: var(--text-main);
-  border: 1px solid var(--text-main);
-  padding: 8px 24px;
-  border-radius: 20px;
-  cursor: pointer;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 25px;
+  min-width: 86px;
+  height: 34px;
+  padding: 0 20px;
+  font-size: 12px;
   font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-register:hover {
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .btn-login {
   background: transparent;
-  color: var(--text-main);
+  color: #FFFFFF;
   border: none;
-  padding: 8px 16px;
+  padding: 8px 0;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
-  font-weight: 600;
 }
 
-/* 4. Головний контейнер */
+/* =========================================
+   3. MAIN PAGE
+========================================= */
+
 .main-page {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 80px 60px 80px;
+  padding: 0 var(--page-gutter) 60px;
 }
 
-section {
+section:not(.hero) {
   margin-bottom: 100px;
 }
 
-/* 5. HERO СЕКЦІЯ */
+/* =========================================
+   4. HERO SECTION
+========================================= */
+
 .hero {
   position: relative;
-  width: 1440px;
-  height: 1003px;
-  margin: 0 auto 60px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 40px 0 50px 0;
-  isolation: isolate; 
+
+  /* Виходимо за межі контейнера,
+     щоб фон займав всю ширину екрана */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
+  height: calc(100vh - 55px);
+  min-height: 740px;
+  max-height: 1000px;
+
   overflow: hidden;
+  isolation: isolate;
 }
+
+/* Текстура фону */
 
 .hero::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -80px;
-  width: 1440px;
-  height: 1003px;
+  inset: 0;
+
   background-image: url('./assets/2fde45e5754130e4b563aa741e1f655d7630fb7c.png');
+  background-size: cover;
+  background-position: center;
   opacity: 0.3;
   mix-blend-mode: color-burn;
+
   pointer-events: none;
   z-index: -2;
 }
 
+/* =========================================
+   5. 3D GRAPHICS
+========================================= */
+
 .hero-graphics {
   position: absolute;
-  width: 1070px;
-  height: 1115px;
-  top: -117.51px;
-  left: 411.47px;
-  transform: rotate(-178deg);
+
+  /* Картинка тепер займає всю площу Hero */
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+
   background-image: url('./assets/9e9d729c919e6f22eeac83a4eaf82d7dac91d42a.png');
-  background-size: contain;
+
+  background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
-  z-index: -1; 
+
+  /* Прибираємо старий поворот */
+  transform: none;
+
   pointer-events: none;
+  z-index: -1;
 }
 
-.hero-info, .hero-title, .hero-features {
-  position: relative;
-  z-index: 10; 
+/* =========================================
+   6. HERO INFORMATION
+========================================= */
+
+.hero-info {
+  position: absolute;
+
+  top: 11%;
+  left: var(--page-gutter);
+
+  width: 300px;
+  max-width: 35%;
+
+  z-index: 2;
 }
 
-.hero-info { max-width: 420px; }
-.hero-greeting { font-size: 1rem; margin-bottom: 10px; }
-.hero-description { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+.hero-greeting {
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #FFFFFF;
+}
 
-.hero-actions { display: flex; gap: 15px; }
-.btn-choose, .btn-create {
-  padding: 10px 24px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  cursor: pointer;
+.hero-description {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 20px;
+  line-height: 1.35;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-choose,
+.btn-create {
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-size: 12px;
   font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
 }
-.btn-choose { background: var(--accent-blue); color: var(--text-main); border: none; }
-.btn-create { background: transparent; color: var(--text-main); border: 1px solid var(--text-main); }
 
-.hero-title { font-size: 5.5rem; line-height: 1.05; font-weight: 700; letter-spacing: -1px; }
+.btn-choose {
+  background: var(--accent-blue);
+  color: #FFFFFF;
+  border: none;
+}
 
-.hero-features { display: flex; justify-content: space-between; max-width: 750px; gap: 20px; }
+.btn-create {
+  background: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+/* =========================================
+   7. MAIN TITLE
+========================================= */
+
+.hero-title {
+  position: absolute;
+
+  left: var(--page-gutter);
+  top: 40%;
+
+  max-width: 750px;
+
+  font-size: clamp(48px, 7.8vw, 80px);
+  line-height: 0.96;
+  font-weight: 700;
+  letter-spacing: -2px;
+
+  color: #FFFFFF;
+  z-index: 2;
+}
+
+/* =========================================
+   8. BOTTOM FEATURES
+========================================= */
+
+.hero-features {
+  position: absolute;
+
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  bottom: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  z-index: 2;
+}
+
 .feature-badge {
-  background: rgba(33, 33, 33, 0.6);
-  padding: 12px 25px;
+  flex: 1;
+  max-width: 300px;
+  min-height: 48px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 12px 15px;
+
+  background: rgba(33, 33, 33, 0.65);
   border-radius: 30px;
-  font-size: 0.85rem;
-  color: var(--text-main);
-  border: 1px solid #333;
+
+  font-size: 11px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(5px);
 }
 
-/* 6. СЕКЦІЇ КВІЗІВ ТА КАРТКИ (ТОЧНО ЯК НА ФІГМІ) */
+/* =========================================
+   9. QUIZ SECTIONS
+========================================= */
+
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 40px; 
+  margin-bottom: 40px;
 }
 
-.section-header h2 { 
-  font-size: 2.2rem; 
-  margin-bottom: 15px; 
-  font-weight: 700; 
+.section-header h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.section-header p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  max-width: 600px;
+}
+
+.see-all {
   color: #FFFFFF;
-}
-
-.section-header p { 
-  color: rgba(255, 255, 255, 0.7); 
-  font-size: 0.95rem; 
-  max-width: 600px; 
-  line-height: 1.5;
-}
-
-.see-all { 
-  color: #FFFFFF; 
-  font-size: 0.95rem; 
-  text-decoration: underline; 
-  white-space: nowrap; 
-  font-weight: 500;
-  margin-bottom: 5px; 
+  font-size: 0.95rem;
+  text-decoration: underline;
+  white-space: nowrap;
+  margin-bottom: 5px;
 }
 
 .quiz-grid {
@@ -205,134 +360,132 @@ section {
   gap: 24px;
 }
 
-/* Стиль кожної картки */
 .quiz-card {
   background-color: #1E1E1E;
   border-radius: 20px;
-  padding: 30px 24px; 
-  height: 380px; 
+  padding: 30px 24px;
+  height: 380px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.05); 
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .quiz-card.active {
-  background-color: #2B5CFF; 
+  background-color: #2B5CFF;
   border: none;
 }
 
-/* Верхня частина картки (іконки) */
 .card-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.1rem; 
-  color: rgba(255, 255, 255, 0.8); 
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
-.quiz-card.active .card-top { 
-  color: #FFFFFF; 
-}
-
-/* Іконка з людьми та цифрою */
 .card-users {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* ВИДАЛЕНО ПСЕВДОЕЛЕМЕНТИ ::before ДЛЯ ІКОНОК (card-users, card-heart), 
-ЩОБ ЗАПОБІГТИ ДУБЛЮВАННЮ, ЯКЩО ВОНИ ВЖЕ Є В HTML */
-
-/* Центральна частина (текст) */
 .card-content {
   text-align: center;
-  margin-top: -20px; 
+  margin-top: -20px;
 }
 
 .card-theme {
-  font-size: 1rem; 
-  color: rgba(255, 255, 255, 0.5); 
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
   margin-bottom: 12px;
   display: block;
-  letter-spacing: 0.5px;
-}
-
-.quiz-card.active .card-theme { 
-  color: rgba(255, 255, 255, 0.8); 
 }
 
 .card-content h3 {
-  font-size: 1.8rem; 
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 15px;
-  color: #FFFFFF;
 }
 
-/* Зірочки */
 .card-stars {
-  color: rgba(255, 255, 255, 0.2); 
-  font-size: 1.4rem; 
-  letter-spacing: 6px; 
-  position: relative; 
-  display: inline-block; 
-}
-
-.quiz-card.active .card-stars { 
-  color: rgba(255, 255, 255, 0.5); 
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 1.4rem;
+  letter-spacing: 6px;
+  position: relative;
+  display: inline-block;
 }
 
 .card-stars::before {
-  content: "★★★★"; 
-  color: #FFFFFF; 
+  content: "★★★★";
+  color: #FFFFFF;
   position: absolute;
   left: 0;
   top: 0;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
-.quiz-card.active .card-stars::before {
-  color: #FFFFFF; 
-}
-
-/* Нижня кнопка Start - Оновлено за макетом */
 .btn-start {
-  background: transparent; 
-  border: 1px solid rgba(255, 255, 255, 0.4); /* Тонша і світліша рамка */
-  color: #FFFFFF; 
-  padding: 12px 0; /* Збільшено вертикальні відступи */
-  border-radius: 40px; /* Повністю закруглені кути */
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+  padding: 12px 0;
+  border-radius: 40px;
   cursor: pointer;
-  font-weight: 600; /* Жирніший шрифт */
-  font-size: 1rem; /* Трохи більший шрифт */
-  width: 130px; /* Трохи вужча кнопка */
-  margin: 0 auto; 
+  font-weight: 600;
+  font-size: 1rem;
+  width: 130px;
+  margin: 0 auto;
   display: block;
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
 }
 
 .btn-start:hover {
-  background: rgba(255, 255, 255, 0.1); 
+  background: rgba(255, 255, 255, 0.1);
   border-color: #FFFFFF;
 }
 
-.quiz-card.active .btn-start {
-    border-color: #FFFFFF;
-}
-.quiz-card.active .btn-start:hover {
-    background: rgba(255, 255, 255, 0.2);
+/* =========================================
+   10. CREATE QUIZ CARD
+========================================= */
+
+.create-quiz-card {
+  background: var(--accent-blue);
+  border-radius: 20px;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* CTA БАНЕР (ТОЧНИЙ ЗБІГ З FIGMA) */
+.btn-create-quiz {
+  background: transparent;
+  color: #FFFFFF;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.plus-icon {
+  font-size: 2rem;
+  margin-right: 8px;
+}
+
+/* =========================================
+   11. CTA BANNER
+========================================= */
+
 .cta-banner {
-  font-family: 'Gilroy', sans-serif !important;
   background-color: #2B5CFF;
   border-radius: 24px;
   padding: 60px 80px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   position: relative;
   overflow: hidden;
   margin-bottom: 100px;
@@ -345,7 +498,6 @@ section {
 }
 
 .cta-content h2 {
-  font-family: 'Gilroy', sans-serif !important;
   font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 20px;
@@ -353,22 +505,12 @@ section {
   line-height: 1.15;
 }
 
-.cta-content p {
-  font-family: 'Gilroy', sans-serif !important;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.95rem;
-  margin-bottom: 35px;
-  line-height: 1.6;
-}
-
 .cta-buttons {
   display: flex;
   gap: 15px;
 }
 
-/* Кнопки банера */
-.btn-cta-white {
-  font-family: 'Gilroy', sans-serif !important;
+.btn-primary {
   background: #FFFFFF;
   color: #205BF1;
   border: none;
@@ -376,54 +518,32 @@ section {
   border-radius: 30px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.95rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-.btn-cta-outline {
-  font-family: 'Gilroy', sans-serif !important;
-  background: transparent;
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  padding: 14px 32px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-}
-
-/* 3D-фігура в банері */
 .cta-graphics {
   position: absolute;
   right: -30px;
   top: -40px;
   width: 600px;
   height: 550px;
+
   background-image: url('./assets/c68b65e36ca029cb12556e0a832a600e4957f869.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+
   pointer-events: none;
   z-index: 1;
 }
 
-/* 3D-фігура в банері */
-.cta-graphics {
-  position: absolute;
-  right: -30px;
-  top: -40px;
-  width: 600px;
-  height: 550px;
-  background-image: url('./assets/c68b65e36ca029cb12556e0a832a600e4957f869.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  pointer-events: none;
-  z-index: 1;
-}
+/* =========================================
+   12. REVIEWS
+========================================= */
 
-/* 8. ВІДГУКИ */
-.reviews-section h2 { font-size: 2.2rem; margin-bottom: 30px; }
+.reviews-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
 
 .reviews-grid {
   display: grid;
@@ -439,123 +559,962 @@ section {
   border: 1px solid #222;
 }
 
-.reviewer-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.reviewer-info {
   margin-bottom: 15px;
 }
 
-.avatar-placeholder {
-  width: 45px;
-  height: 45px;
-  background: #e67e22;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.1rem;
+.review-text {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-.avatar-placeholder.v-avatar { background: #9b59b6; }
-.reviewer-name { font-weight: bold; font-size: 1.1rem; }
-.review-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+/* =========================================
+   13. STATISTICS FOOTER
+========================================= */
 
-.pagination-dots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  background: #444;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.dot.active { background: #fff; width: 24px; border-radius: 4px; }
-
-/* 9. СИНИЙ ФУТЕР ЗІ СТАТИСТИКОЮ (ТОЧНИЙ ЗБІГ З FIGMA) */
 .stats-footer {
-  background-color: #2B5CFF; /* Синій фон */
-  width: 100vw; /* На всю ширину екрана */
-  margin-left: -80px; /* Компенсуємо padding головного контейнера */
-  padding: 100px 0 40px 0;
+  background-color: #2B5CFF;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+
+  padding: 100px 0 40px;
+
   position: relative;
   overflow: hidden;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-/* Наша "загагулінка", яка визирає зліва */
-.stats-graphics {
-  position: absolute;
-  left: -150px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 500px;
-  height: 450px;
-  background-image: url('./assets/4ecfa17560a466aad708c43c359db7fb7325bcc2.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center left;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.stats-content {
-  position: relative;
-  z-index: 2;
-  margin-bottom: 80px;
-}
-
 .stats-number {
-  font-size: 6rem; /* Збільшено розмір як на макеті */
+  font-size: 6rem;
   font-weight: 800;
   color: #FFFFFF;
   line-height: 1;
   margin-bottom: 15px;
 }
 
-.stats-label {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+/* =========================================
+   14. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 768px) {
+
+  .header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .hero {
+    min-height: 700px;
+  }
+
+  .hero-graphics {
+    background-size: auto 90%;
+    background-position: 65% center;
+  }
+
+  .hero-info {
+    max-width: 80%;
+    width: 300px;
+    top: 10%;
+  }
+
+  .hero-title {
+    top: 42%;
+    font-size: clamp(42px, 8vw, 60px);
+    max-width: 90%;
+    letter-spacing: -1px;
+  }
+
+  .hero-features {
+    gap: 8px;
+  }
+
+  .feature-badge {
+    font-size: 9px;
+    padding: 10px 6px;
+  }
+
+  .quiz-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cta-banner {
+    padding: 40px 30px;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+
+  .cta-graphics {
+    opacity: 0.4;
+  }
 }
 
-.footer-bottom {
+@media (max-width: 480px) {
+
+  :root {
+    --page-gutter: 20px;
+  }
+
+  .header {
+    padding: 0 20px;
+  }
+
+  .auth-nav {
+    gap: 8px;
+  }
+
+  .btn-register {
+    min-width: 75px;
+    padding: 0 12px;
+  }
+
+  .hero {
+    min-height: 720px;
+  }
+
+  .hero-info {
+    top: 8%;
+    max-width: 85%;
+  }
+
+  .hero-description {
+    font-size: 11px;
+  }
+
+  .hero-title {
+    top: 43%;
+    font-size: 43px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-features {
+    flex-direction: column;
+    align-items: stretch;
+    bottom: 20px;
+  }
+
+  .feature-badge {
+    max-width: none;
+    min-height: 40px;
+  }
+
+  .quiz-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-banner {
+    padding: 35px 20px;
+  }
+
+  .cta-content h2 {
+    font-size: 1.7rem;
+  }
+
+  .stats-number {
+    font-size: 4rem;
+  }
+}
+
+/* ==========================================
+   QUIZMASTER — HEADER AND HERO FINAL OVERRIDE
+========================================== */
+
+/* Відступи, однакові для логотипа і тексту */
+:root {
+  --page-gutter: clamp(24px, 7.1vw, 100px);
+}
+
+/* HEADER */
+
+.header {
   width: 100%;
-  max-width: 600px; /* Звужено контейнер, щоб посилання були ближче до центру */
-  display: flex;
-  justify-content: center;
+  max-width: 1440px;
+  height: 64px;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 40px; /* Відстань між копірайтом і посиланнями */
-  font-size: 0.9rem;
+
   position: relative;
+  z-index: 10;
+}
+
+.logo {
+  font-family: 'Gilroy', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.main-nav a {
+  font-size: 12px;
+  color: #FFFFFF;
+}
+
+.auth-nav {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 12px;
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+
+  width: calc(100% + 2 * var(--page-gutter));
+  margin-left: calc(-1 * var(--page-gutter));
+
+  height: calc(100vh - 64px);
+  min-height: 740px;
+  max-height: 1003px;
+
+  overflow: hidden;
+}
+
+/* Темний текстурний фон */
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    url('./assets/2fde45e5754130e4b563aa741e1f655d7630fb7c.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.3;
+  mix-blend-mode: color-burn;
+
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* 3D ЗОБРАЖЕННЯ */
+
+.hero-graphics {
+  position: absolute;
+
+  width: min(74.3vw, 1070px);
+  height: min(77.43vw, 1115px);
+
+  top: max(-8.2vw, -118px);
+  left: min(28.6vw, 411px);
+
+  background-image:
+    url('./assets/9e9d729c919e6f22eeac83a4eaf82d7dac91d42a.png');
+
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Віддзеркалюємо фігуру по горизонталі */
+  transform: scaleX(-1);
+
+  transform-origin: center;
+
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ПРИВІТАННЯ ТА ОПИС */
+
+.hero-info {
+  position: absolute;
+
+  top: 11.5%;
+  left: var(--page-gutter);
+
+  width: 300px;
+  max-width: 35%;
+
   z-index: 2;
 }
 
+.hero-greeting {
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #FFFFFF;
+}
+
+.hero-description {
+  font-size: 12px;
+  line-height: 1.35;
+
+  color: rgba(255, 255, 255, 0.85);
+
+  margin-bottom: 20px;
+}
+
+/* КНОПКИ ПІД ОПИСОМ */
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-choose,
+.btn-create {
+  padding: 10px 22px;
+  border-radius: 25px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-choose {
+  background: #2B5CFF;
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-create {
+  background: transparent;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+/* ГОЛОВНИЙ ЗАГОЛОВОК */
+
+.hero-title {
+  position: absolute;
+
+  top: 40%;
+  left: var(--page-gutter);
+
+  max-width: 850px;
+
+  font-family: 'Gilroy', sans-serif;
+  font-size: clamp(48px, 7.8vw, 80px);
+  line-height: 0.96;
+  font-weight: 700;
+  letter-spacing: -2px;
+
+  color: #FFFFFF;
+  z-index: 2;
+}
+
+/* ТРИ НИЖНІ БЛОКИ */
+
+.hero-features {
+  position: absolute;
+
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  bottom: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  z-index: 2;
+}
+
+.feature-badge {
+  flex: 1;
+  max-width: 300px;
+  min-height: 48px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 12px 15px;
+
+  background: rgba(33, 33, 33, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 30px;
+
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+
+  backdrop-filter: blur(5px);
+}
+
+/* МОБІЛЬНА ВЕРСІЯ */
+
+@media (max-width: 768px) {
+
+  .header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .hero {
+    min-height: 740px;
+  }
+
+  .hero-graphics {
+    width: 105vw;
+    height: 110vw;
+
+    left: 8vw;
+    top: -5vw;
+  }
+
+  .hero-info {
+    max-width: 80%;
+  }
+
+  .hero-title {
+    font-size: clamp(42px, 8vw, 60px);
+    max-width: 90%;
+  }
+
+  .hero-features {
+    gap: 8px;
+  }
+
+  .feature-badge {
+    font-size: 9px;
+    padding: 10px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero-title {
+    font-size: 43px;
+    letter-spacing: -1.5px;
+  }
+
+  .hero-features {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .feature-badge {
+    max-width: none;
+    min-height: 40px;
+  }
+}
+
+
+/* ============================================
+   QUIZMASTER — FIGMA HEADER ADJUSTMENTS
+============================================ */
+
+/* Загальні відступи макета */
+:root {
+  --page-gutter: clamp(24px, 6.944vw, 100px);
+}
+
+/* HEADER */
+
+.header {
+  width: 100%;
+  max-width: 1440px;
+  height: 64px;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  position: relative;
+  z-index: 10;
+}
+
+/* HERO FRAME */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+
+  width: calc(100% + 2 * var(--page-gutter));
+  margin-left: calc(-1 * var(--page-gutter));
+
+  height: 1003px;
+  min-height: 1003px;
+  max-height: none;
+
+  overflow: hidden;
+}
+
+/* ФОНОВА ТЕКСТУРА */
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    url('./assets/2fde45e5754130e4b563aa741e1f655d7630fb7c.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  opacity: 0.2;
+
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* 3D GRAPHICS — FIGMA DIMENSIONS */
+
+.hero-graphics {
+  position: absolute;
+
+  width: min(74.3056vw, 1070px);
+  height: min(77.4306vw, 1115px);
+
+  left: min(28.5743vw, 411.47px);
+  top: max(-8.1604vw, -117.51px);
+
+  background-image:
+    url('./assets/9e9d729c919e6f22eeac83a4eaf82d7dac91d42a.png');
+
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Залишаємо дзеркальне розташування,
+     яке вже дало правильний напрямок фігури */
+  transform: scaleX(-1);
+
+  transform-origin: center;
+
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ТЕКСТОВИЙ БЛОК */
+
+.hero-info {
+  position: absolute;
+
+  left: var(--page-gutter);
+  top: 11.5%;
+
+  width: 300px;
+  max-width: 35%;
+
+  z-index: 2;
+}
+
+/* ГОЛОВНИЙ ЗАГОЛОВОК */
+
+.hero-title {
+  position: absolute;
+
+  left: var(--page-gutter);
+  top: 40%;
+
+  max-width: 850px;
+
+  font-family: 'Gilroy', sans-serif;
+  font-size: clamp(48px, 7.8vw, 80px);
+  line-height: 0.96;
+  letter-spacing: -2px;
+  font-weight: 700;
+
+  color: #FFFFFF;
+
+  z-index: 2;
+}
+
+/* ТРИ НИЖНІ БЛОКИ */
+
+.hero-features {
+  position: absolute;
+
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  bottom: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  z-index: 2;
+}
+
+.feature-badge {
+  flex: 1;
+  max-width: 300px;
+  min-height: 48px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 12px 15px;
+
+  background: rgba(33, 33, 33, 0.65);
+
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 30px;
+
+  font-family: 'Gilroy', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #FFFFFF;
+  text-align: center;
+
+  backdrop-filter: blur(5px);
+}
+
+/* МОБІЛЬНА АДАПТАЦІЯ */
+
+@media (max-width: 768px) {
+
+  .header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .main-nav {
+    display: none;
+  }
+
+  .hero-graphics {
+    width: 105vw;
+    height: 110vw;
+    left: 8vw;
+    top: -5vw;
+  }
+
+  .hero-info {
+    max-width: 80%;
+  }
+
+  .hero-title {
+    max-width: 90%;
+    font-size: clamp(42px, 8vw, 60px);
+  }
+
+  .hero-features {
+    gap: 8px;
+  }
+
+  .feature-badge {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero-features {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .feature-badge {
+    max-width: none;
+  }
+}
+
+
+/* ==========================================
+   QUIZMASTER FOOTER — FIGMA DESIGN
+========================================== */
+
+/* Main footer */
+.stats-footer {
+  position: relative;
+
+  width: 100vw;
+  height: 365px;
+  min-height: 365px;
+
+  margin-left: calc(50% - 50vw);
+  margin-bottom: 0 !important;
+
+  padding: 0;
+
+  background-color: #205BF1;
+
+  display: block;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 3D decorative figure on the left */
+.stats-graphics {
+  position: absolute;
+
+  left: -150px;
+  top: 50%;
+
+  width: 500px;
+  height: 450px;
+
+  transform: translateY(-50%);
+
+  background-image: url('./assets/4ecfa17560a466aad708c43c359db7fb7325bcc2.png');
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center left;
+
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Central statistics */
+.stats-content {
+  position: absolute;
+
+  top: 48px;
+  left: 0;
+  right: 0;
+
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+  z-index: 1;
+}
+
+/* Large number */
+.stats-number {
+  font-family: 'Gilroy', sans-serif;
+
+  font-size: 120px;
+  font-weight: 800;
+  line-height: 1;
+
+  color: #FFFFFF;
+
+  margin-bottom: 12px;
+}
+
+/* Number description */
+.stats-label {
+  font-family: 'Gilroy', sans-serif;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Bottom copyright and links */
+.footer-bottom {
+  position: absolute;
+
+  left: 50%;
+  bottom: 24px;
+
+  transform: translateX(-50%);
+
+  width: max-content;
+  max-width: calc(100% - 40px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 40px;
+
+  font-family: 'Gilroy', sans-serif;
+  font-size: 12px;
+
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* Copyright */
 .copyright {
   font-weight: 700;
   color: #FFFFFF;
 }
 
+/* Footer navigation */
 .footer-links {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 16px;
 }
 
 .footer-links a {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.55);
   text-decoration: none;
+
+  transition: color 0.2s ease;
 }
 
 .footer-links a:hover {
-  text-decoration: underline;
+  color: #FFFFFF;
 }
+
+/* ==========================================
+   FOOTER — MOBILE ADAPTATION
+========================================== */
+
+@media (max-width: 768px) {
+
+  .stats-footer {
+    height: 340px;
+    min-height: 340px;
+  }
+
+  .stats-graphics {
+    left: -180px;
+    width: 400px;
+    height: 360px;
+    opacity: 0.8;
+  }
+
+  .stats-number {
+    font-size: 90px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    bottom: 20px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .stats-number {
+    font-size: 76px;
+  }
+
+  .stats-label {
+    font-size: 11px;
+  }
+
+  .footer-graphics {
+    opacity: 0.6;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .footer-links {
+    gap: 12px;
+  }
+}
+
+
+/* =====================================
+   QUIZ CARD ICONS — FIGMA STYLE
+===================================== */
+
+/* Верхня частина картки */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Іконка користувачів + число */
+.card-users {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* SVG користувачів */
+.card-users-icon {
+  display: block;
+  flex-shrink: 0;
+
+  width: 26px;
+  height: 24px;
+
+  background-image: url('./assets/icons/users.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Кількість користувачів */
+.users-count {
+  font-family: 'Gilroy', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+/* Кнопка сердечка */
+.card-heart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+/* SVG сердечка */
+.card-heart-icon {
+  display: block;
+  flex-shrink: 0;
+
+  width: 26px;
+  height: 26px;
+
+  background-image: url('./assets/icons/heart.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  transition: transform 0.2s ease;
+}
+
+.card-heart:hover .card-heart-icon {
+  transform: scale(1.12);
+}
+
 
 /* Main navigation */
 .main-nav {
