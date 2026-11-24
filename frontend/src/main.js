@@ -3,7 +3,16 @@ import './style.css';
 import { renderHome } from './pages/home.js';
 import { renderAdults } from './pages/adults.js';
 import { renderChildren } from './pages/children.js';
-import { renderQuiz } from './pages/quiz.js';
+
+import {
+  renderQuiz,
+  renderQuizQuestion,
+  renderQuizResults,
+  renderQuizReview,
+  renderQuizThankYou,
+} from './pages/quiz.js';
+
+import { quizQuestions } from './data/quiz-questions.js';
 
 import { renderLogin } from './modals/login.js';
 import { renderRegister } from './modals/register.js';
@@ -21,6 +30,8 @@ const routes = {
 
 // Render the current page
 function renderPage() {
+  stopQuizTimer();
+
   const path = window.location.pathname;
   const page = routes[path] || renderHome;
 
@@ -69,8 +80,6 @@ window.addEventListener('popstate', () => {
   }
 });
 
-renderPage();
-
 // Close authentication modals
 function closeAuthModal() {
   document.querySelector('#login-modal')?.remove();
@@ -99,11 +108,6 @@ function openAuthModal(type) {
   }
 
   document.body.insertAdjacentHTML('beforeend', modal);
-}
-
-// Temporary route for testing New password
-if (window.location.pathname === '/reset-password') {
-  openAuthModal('new-password');
 }
 
 // Update password validation state
@@ -330,3 +334,329 @@ document.addEventListener('submit', (event) => {
     // Actual password reset requires backend integration
   }
 });
+
+// =============================
+// QUIZ FUNCTIONALITY
+// =============================
+
+// Enable the quiz Start button when a name is entered
+document.addEventListener('input', (event) => {
+  if (!event.target.matches('#quiz-player-name')) return;
+
+  const form = event.target.closest('.quiz-start-form');
+  const startButton = form.querySelector('.quiz-start-button');
+
+  startButton.disabled = event.target.value.trim() === '';
+});
+
+// Quiz state
+let currentQuestionIndex = 0;
+let quizPlayerName = '';
+let selectedAnswers = {};
+let quizRating = 0;
+
+// Quiz timer state
+const QUIZ_DURATION = 105;
+
+let quizTimeLeft = QUIZ_DURATION;
+let quizTimerId = null;
+let quizDeadline = 0;
+
+// Update timer display
+function updateQuizTimer() {
+  const timer = document.querySelector('#quiz-time');
+
+  if (!timer) return;
+
+  const minutes = Math.floor(quizTimeLeft / 60);
+  const seconds = quizTimeLeft % 60;
+
+  timer.textContent = `${minutes}:${String(seconds).padStart(2, '0')}`;
+
+  timer.classList.toggle('is-warning', quizTimeLeft <= 10);
+}
+
+// Stop the timer
+function stopQuizTimer() {
+  clearInterval(quizTimerId);
+  quizTimerId = null;
+}
+
+// Start the timer
+function startQuizTimer() {
+  stopQuizTimer();
+
+  quizTimeLeft = QUIZ_DURATION;
+  quizDeadline = Date.now() + QUIZ_DURATION * 1000;
+
+  updateQuizTimer();
+
+  quizTimerId = setInterval(() => {
+    if (!document.querySelector('.quiz-question-panel')) {
+      stopQuizTimer();
+      return;
+    }
+
+    quizTimeLeft = Math.max(0, Math.ceil((quizDeadline - Date.now()) / 1000));
+
+    updateQuizTimer();
+
+    if (quizTimeLeft === 0) {
+      stopQuizTimer();
+      showQuizResults();
+    }
+  }, 250);
+}
+
+// Display the current question
+function showQuizQuestion() {
+  const quizMain = document.querySelector('.quiz-main');
+
+  if (!quizMain) return;
+
+  quizMain.querySelector('.quiz-start-panel')?.remove();
+  quizMain.querySelector('.quiz-question-panel')?.remove();
+  quizMain.querySelector('.quiz-results-panel')?.remove();
+  quizMain.querySelector('.quiz-back-link')?.remove();
+
+  quizMain.insertAdjacentHTML(
+    'beforeend',
+    renderQuizQuestion(
+      quizQuestions[currentQuestionIndex],
+      currentQuestionIndex,
+      quizQuestions.length
+    )
+  );
+
+  restoreQuizAnswer();
+  updateQuizTimer();
+}
+
+// Start the quiz
+document.addEventListener('submit', (event) => {
+  if (!event.target.matches('.quiz-start-form')) return;
+
+  event.preventDefault();
+
+  const playerName = event.target
+    .querySelector('#quiz-player-name')
+    .value.trim();
+
+  if (!playerName) return;
+
+  quizPlayerName = playerName;
+  currentQuestionIndex = 0;
+  selectedAnswers = {};
+  quizRating = 0;
+  quizTimeLeft = QUIZ_DURATION;
+
+  showQuizQuestion();
+  startQuizTimer();
+});
+
+// Restore a previously selected answer
+function restoreQuizAnswer() {
+  const selectedAnswer = selectedAnswers[currentQuestionIndex];
+
+  if (selectedAnswer === undefined) return;
+
+  const question = quizQuestions[currentQuestionIndex];
+  const panel = document.querySelector('.quiz-question-panel');
+
+  if (!panel) return;
+
+  const answers = panel.querySelectorAll('.quiz-answer');
+  const nextButton = panel.querySelector('.quiz-next-button');
+
+  answers.forEach((button) => {
+    const answerIndex = Number(button.dataset.answer);
+
+    if (answerIndex === selectedAnswer) {
+      button.classList.add(
+        selectedAnswer === question.correctAnswer
+          ? 'is-correct'
+          : 'is-incorrect'
+      );
+    }
+
+    button.disabled = true;
+  });
+
+  nextButton.disabled = false;
+}
+
+// Calculate and display quiz results
+function showQuizResults() {
+  stopQuizTimer();
+
+  const quizMain = document.querySelector('.quiz-main');
+
+  if (!quizMain) return;
+
+  const correctAnswers = quizQuestions.reduce((score, question, index) => {
+    return score + (selectedAnswers[index] === question.correctAnswer ? 1 : 0);
+  }, 0);
+
+  quizMain.querySelector('.quiz-question-panel')?.remove();
+  quizMain.querySelector('.quiz-back-link')?.remove();
+
+  quizMain.insertAdjacentHTML(
+    'beforeend',
+    renderQuizResults(correctAnswers, quizQuestions.length)
+  );
+}
+
+// Update quiz rating
+function updateQuizRating(rating) {
+  quizRating = rating;
+
+  const stars = document.querySelectorAll('.quiz-rating-star');
+
+  stars.forEach((star) => {
+    const starValue = Number(star.dataset.rating);
+
+    star.classList.toggle('is-active', starValue <= quizRating);
+
+    star.setAttribute('aria-pressed', String(starValue === quizRating));
+  });
+}
+
+// Handle quiz interactions
+document.addEventListener('click', (event) => {
+  // Select an answer
+  const answer = event.target.closest('.quiz-answer');
+
+  if (answer) {
+    if (answer.disabled) return;
+
+    selectedAnswers[currentQuestionIndex] = Number(answer.dataset.answer);
+
+    restoreQuizAnswer();
+
+    return;
+  }
+
+  // Next question or quiz results
+  const nextButton = event.target.closest('.quiz-next-button');
+
+  if (nextButton) {
+    if (nextButton.disabled) return;
+
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+      currentQuestionIndex += 1;
+
+      showQuizQuestion();
+    } else {
+      showQuizResults();
+    }
+
+    return;
+  }
+
+  // Previous question
+  const prevButton = event.target.closest('.quiz-prev-button');
+
+  if (prevButton) {
+    if (currentQuestionIndex > 0) {
+      currentQuestionIndex -= 1;
+
+      showQuizQuestion();
+    }
+
+    return;
+  }
+
+  // Rate the quiz
+  const ratingStar = event.target.closest('.quiz-rating-star');
+
+  if (ratingStar) {
+    updateQuizRating(Number(ratingStar.dataset.rating));
+
+    return;
+  }
+});
+
+// =============================
+// QUIZ REVIEW
+// =============================
+
+// Display the quiz review form
+function showQuizReview() {
+  const quizMain = document.querySelector('.quiz-main');
+
+  if (!quizMain) return;
+
+  quizMain.querySelector('.quiz-results-panel')?.remove();
+  quizMain.querySelector('.quiz-back-link')?.remove();
+
+  quizMain.insertAdjacentHTML('beforeend', renderQuizReview());
+
+  const nameInput = quizMain.querySelector('.quiz-review-name');
+
+  if (nameInput) {
+    nameInput.value = quizPlayerName;
+  }
+
+  updateQuizRating(quizRating);
+}
+
+// Display the thank you screen
+function showQuizThankYou() {
+  const quizMain = document.querySelector('.quiz-main');
+
+  if (!quizMain) return;
+
+  quizMain.querySelector('.quiz-review-panel')?.remove();
+
+  quizMain.insertAdjacentHTML('beforeend', renderQuizThankYou());
+}
+
+// Open the review form
+document.addEventListener('click', (event) => {
+  const reviewButton = event.target.closest('.quiz-review-button');
+
+  if (!reviewButton) return;
+
+  showQuizReview();
+});
+
+// Handle quiz review submission
+document.addEventListener('submit', (event) => {
+  if (!event.target.matches('.quiz-review-form')) return;
+
+  event.preventDefault();
+
+  const form = event.target;
+
+  if (!form.reportValidity()) return;
+
+  const name = form.querySelector('.quiz-review-name').value.trim();
+
+  const review = form.querySelector('.quiz-review-text').value.trim();
+
+  if (!name || !review) {
+    alert('Please complete all fields.');
+    return;
+  }
+
+  if (quizRating === 0) {
+    alert('Please rate the quiz.');
+    return;
+  }
+
+  // Frontend demonstration only
+  // Actual review submission requires backend integration
+
+  showQuizThankYou();
+});
+
+// =============================
+// INITIAL PAGE RENDER
+// =============================
+
+renderPage();
+
+// Temporary route for testing New password
+if (window.location.pathname === '/reset-password') {
+  openAuthModal('new-password');
+}
